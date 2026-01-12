@@ -3,6 +3,7 @@ import { FlatList } from 'react-native';
 
 import { Photo } from '../../../../types/photo';
 
+import Footer from '../Footer';
 import PhotoCard from '../PhotoCard';
 
 import { getPhotoSize } from '../../utils';
@@ -69,6 +70,13 @@ const PhotoListComponent = ({
       maxToRenderPerBatch={10}
       windowSize={10}
       onEndReachedThreshold={0.5}
+      ListFooterComponent={
+        <Footer
+          isFetchingNextPage={isFetchingNextPage}
+          isFetchNextPageError={isFetchNextPageError}
+          fetchNextPage={fetchNextPage}
+        />
+      }
     />
   );
 };

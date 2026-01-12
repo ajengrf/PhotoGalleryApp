@@ -1,14 +1,22 @@
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import FetchFailedContent from './components/FetchFailedContent';
+import Loading from './components/Loading';
 import PhotoList from './components/PhotoList';
 
 import { useGetPhotos } from '../../hooks/useGetPhotos';
 import styles from './styles';
 
 const PhotoGallery = () => {
-  const { data, fetchNextPage, isFetchNextPageError, isFetchingNextPage } =
-    useGetPhotos();
+  const {
+    data,
+    fetchNextPage,
+    isErrorOnInitialLoad,
+    isFetchNextPageError,
+    isFetchingNextPage,
+    isInitialLoad,
+  } = useGetPhotos();
 
   console.log({
     data: data,
@@ -20,13 +28,18 @@ const PhotoGallery = () => {
       <Text style={styles.textTitle}>Photo Gallery</Text>
       <View style={styles.line} />
       <Text style={styles.textSubtitle}>Daily dose of @picsum.</Text>
-
-      <PhotoList
-        data={data}
-        fetchNextPage={fetchNextPage}
-        isFetchNextPageError={isFetchNextPageError}
-        isFetchingNextPage={isFetchingNextPage}
-      />
+      {isInitialLoad ? (
+        <Loading />
+      ) : isErrorOnInitialLoad ? (
+        <FetchFailedContent fetchNextPage={fetchNextPage} />
+      ) : (
+        <PhotoList
+          data={data}
+          fetchNextPage={fetchNextPage}
+          isFetchNextPageError={isFetchNextPageError}
+          isFetchingNextPage={isFetchingNextPage}
+        />
+      )}
     </SafeAreaView>
   );
 };
