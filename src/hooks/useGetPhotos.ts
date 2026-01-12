@@ -1,4 +1,5 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
+
 import { useGetPhotosQuery } from './queryHooks/useGetPhotosQuery';
 
 export const useGetPhotos = () => {
@@ -12,31 +13,15 @@ export const useGetPhotos = () => {
     isFetchNextPageError,
   } = useGetPhotosQuery();
 
-  console.log('data', data);
-  console.log({
-    isFetching,
-    isFetchingNextPage,
-  });
+  const listPhotos = useMemo(
+    () => data?.pages.flatMap(page => page) ?? null,
+    [data],
+  );
 
-  const listPhotos = data?.pages.flatMap(page => page) ?? null;
-
-  console.log(listPhotos, '<listPhotos');
-  console.log({ isError, isFetchNextPageError });
-
-  const isErrorOnInitialLoad = !data && isError;
-  const isInitialLoad = isFetching && !data;
-  console.log('isErrorOnInitialLoad', isErrorOnInitialLoad);
-  console.log('isInitialLoad', isInitialLoad);
-  console.log('isError', isError);
+  const isErrorOnInitialLoad = !listPhotos && isError;
+  const isInitialLoad = isFetching && !listPhotos;
 
   const handleFetchNextPage = useCallback(() => {
-    console.log('handleFetchNextPage', {
-      hasNextPage,
-      isFetchNextPageError,
-      isFetchingNextPage,
-      isErrorOnInitialLoad,
-      isInitialLoad,
-    });
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage({ cancelRefetch: false });
     } else if (isErrorOnInitialLoad) {

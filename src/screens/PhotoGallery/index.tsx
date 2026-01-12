@@ -18,11 +18,6 @@ const PhotoGallery = () => {
     isInitialLoad,
   } = useGetPhotos();
 
-  console.log({
-    data: data,
-    length: data?.length,
-  });
-
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <Text style={styles.textTitle}>Photo Gallery</Text>

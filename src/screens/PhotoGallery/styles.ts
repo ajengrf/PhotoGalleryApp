@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+
 import { Colors } from '../../themes';
 import { getScreenDimention } from '../../utils/StyleUtils';
 
@@ -47,6 +48,9 @@ const styles = StyleSheet.create({
   columnWrapper: {
     marginHorizontal: 10,
     justifyContent: 'space-between',
+  },
+  listContentContainer: {
+    paddingHorizontal: 8,
   },
 });
 

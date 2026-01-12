@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { Pressable, Text, View } from 'react-native';
+
 import styles from './styles';
 
 interface FetchFailedComponentProps {

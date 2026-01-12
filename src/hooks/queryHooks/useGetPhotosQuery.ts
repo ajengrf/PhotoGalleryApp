@@ -29,7 +29,6 @@ const fetchPhotos = async ({
   const key = `${GET_PHOTOS_URL}?page=${pageParam}&limit=${limit}`;
   const response = await fetchApi({ url: key });
 
-  console.log(response, '<response');
   return response;
 };
 
@@ -38,10 +37,6 @@ const getNextPageParam = (
   allPages: Photo[][],
   lastPageParam: number,
 ) => {
-  console.log(lastPage, '<lastPage');
-  console.log(allPages, '<allPages');
-  console.log(lastPageParam, '<lastPageParam');
-
   if (lastPage.length === 0) {
     return undefined;
   }
