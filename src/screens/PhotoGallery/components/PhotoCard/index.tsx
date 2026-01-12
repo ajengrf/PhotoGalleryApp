@@ -16,6 +16,7 @@ interface PhotoCardComponentProps {
 }
 
 const PhotoCardComponent = ({ photo }: PhotoCardComponentProps) => {
+  console.log('photo', photo.id);
   const [isFavorite, setIsFavorite] = useState(false);
 
   const addToFavorite = () => {
@@ -25,10 +26,12 @@ const PhotoCardComponent = ({ photo }: PhotoCardComponentProps) => {
     setIsFavorite(!isFavorite);
   };
 
-  const { imageWidth, imageHeight } = useMemo(() => {
+  const { photoUri } = useMemo(() => {
     const width = getPhotoSize().imageWidth;
     const height = getPhotoSize().imageHeight;
-    return { imageWidth: width, imageHeight: height };
+
+    const photoUri = `https://picsum.photos/id/${photo.id}/${width}/${height}`;
+    return { photoUri };
   }, []);
 
   if (!photo?.url) {
@@ -38,10 +41,7 @@ const PhotoCardComponent = ({ photo }: PhotoCardComponentProps) => {
   return (
     <View style={styles.container}>
       <FastImage
-        // source={{ uri: photo.download_url }}
-        source={{
-          uri: `https://picsum.photos/id/${photo.id}/${imageWidth}/${imageHeight}`,
-        }}
+        source={{ uri: photoUri }}
         resizeMode="cover"
         style={styles.image}
       />
