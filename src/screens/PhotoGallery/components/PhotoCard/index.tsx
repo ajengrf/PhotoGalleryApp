@@ -32,7 +32,7 @@ const PhotoCardComponent = ({ photo }: PhotoCardComponentProps) => {
 
     const photoUri = `https://picsum.photos/id/${photo.id}/${width}/${height}`;
     return { photoUri };
-  }, []);
+  }, [photo.id]);
 
   if (!photo?.url) {
     return;
