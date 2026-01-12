@@ -44,6 +44,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.white,
   },
+  columnWrapper: {
+    marginHorizontal: 10,
+    justifyContent: 'space-between',
+  },
 });
 
 export default styles;

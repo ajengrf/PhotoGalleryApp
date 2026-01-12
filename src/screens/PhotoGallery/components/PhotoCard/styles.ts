@@ -5,7 +5,6 @@ import { Colors } from '../../../../themes';
 const styles = StyleSheet.create({
   container: {
     marginBottom: 24,
-    marginHorizontal: 8,
   },
   image: {
     width: getPhotoSize().imageWidth,
