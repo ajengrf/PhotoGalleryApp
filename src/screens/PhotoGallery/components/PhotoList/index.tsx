@@ -1,11 +1,12 @@
-import { memo, useCallback } from 'react';
-import { FlatList } from 'react-native';
+import { memo, useCallback, useState } from 'react';
+import { FlashList } from '@shopify/flash-list';
 
 import { Photo } from '../../../../types/photo';
 
 import Footer from '../Footer';
 import PhotoCard from '../PhotoCard';
 
+import { usePhotoList } from './hooks/usePhotoList';
 import styles from '../../styles';
 
 interface PhotoListComponentProps {
@@ -21,40 +22,36 @@ const PhotoListComponent = ({
   isFetchNextPageError,
   fetchNextPage,
 }: PhotoListComponentProps) => {
-  console.log('photolist');
+  const { favoriteIDs, keyExtractor, onEndReached, toggleFavorite } =
+    usePhotoList({
+      isFetchingNextPage,
+      isFetchNextPageError,
+      fetchNextPage,
+    });
 
-  const renderItem = useCallback(({ item }: { item: Photo }) => {
-    return <PhotoCard photo={item} />;
-  }, []);
+  const renderItem = useCallback(
+    ({ item }: { item: Photo }) => {
+      const isFavorite = favoriteIDs.has(item.id);
 
-  const keyExtractor = useCallback((item: Photo) => {
-    return `${item.id}`;
-  }, []);
-
-  const onEndReached = useCallback(() => {
-    console.log('onEndReached');
-
-    if (isFetchingNextPage) {
-      return;
-    }
-
-    if (!isFetchNextPageError) {
-      fetchNextPage();
-    }
-  }, [isFetchingNextPage, isFetchNextPageError, fetchNextPage]);
+      return (
+        <PhotoCard
+          photo={item}
+          isFavorite={isFavorite}
+          toggleFavorite={toggleFavorite}
+        />
+      );
+    },
+    [favoriteIDs, toggleFavorite],
+  );
 
   return (
-    <FlatList
+    <FlashList
       data={data}
       renderItem={renderItem}
       numColumns={2}
       keyExtractor={keyExtractor}
       onEndReached={onEndReached}
-      initialNumToRender={10}
-      maxToRenderPerBatch={10}
-      windowSize={10}
       onEndReachedThreshold={0.5}
-      columnWrapperStyle={styles.columnWrapper}
       ListFooterComponent={
         <Footer
           isFetchingNextPage={isFetchingNextPage}
@@ -62,6 +59,7 @@ const PhotoListComponent = ({
           fetchNextPage={fetchNextPage}
         />
       }
+      contentContainerStyle={styles.listContentContainer}
     />
   );
 };

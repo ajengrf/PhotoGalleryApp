@@ -2,7 +2,7 @@ import { getScreenDimention } from '../../../utils/StyleUtils';
 
 export const getPhotoSize = () => {
   const width = getScreenDimention()?.windowWidth;
-  const imageWidth = width / 2 - 16; // minus margin
+  const imageWidth = Math.floor(width / 2);
   const imageHeight = imageWidth;
 
   return {

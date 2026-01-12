@@ -7,15 +7,17 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   image: {
-    width: getPhotoSize().imageWidth,
-    height: getPhotoSize().imageHeight,
+    width: getPhotoSize().imageWidth - 16,
+    height: getPhotoSize().imageHeight - 16,
     borderRadius: 16,
     backgroundColor: Colors.darkGrey,
+    alignSelf: 'center',
   },
   contentContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 4,
+    marginHorizontal: 8,
   },
   detailWrapper: {
     marginRight: 4,

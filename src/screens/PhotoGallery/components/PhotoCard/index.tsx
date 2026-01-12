@@ -13,17 +13,20 @@ import styles from './styles';
 
 interface PhotoCardComponentProps {
   photo: Photo;
+  isFavorite: boolean;
+  toggleFavorite: (id: string) => void;
 }
 
-const PhotoCardComponent = ({ photo }: PhotoCardComponentProps) => {
-  console.log('photo', photo.id);
-  const [isFavorite, setIsFavorite] = useState(false);
-
+const PhotoCardComponent = ({
+  photo,
+  isFavorite,
+  toggleFavorite,
+}: PhotoCardComponentProps) => {
   const addToFavorite = () => {
     if (!isFavorite) {
       showToast('Added to favorites!');
     }
-    setIsFavorite(!isFavorite);
+    toggleFavorite(photo.id);
   };
 
   const { photoUri } = useMemo(() => {
@@ -34,7 +37,7 @@ const PhotoCardComponent = ({ photo }: PhotoCardComponentProps) => {
     return { photoUri };
   }, [photo.id]);
 
-  if (!photo?.url) {
+  if (!photo?.id) {
     return;
   }
 
